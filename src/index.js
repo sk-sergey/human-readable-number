@@ -1,8 +1,59 @@
 module.exports = function toReadable (number) {
 
-    
+    if (number == 0) {return readableNumbers[0];}
+    return reHundred(number) + reDecade(number) + reNumber(number);
+}
 
-  
+function reHundred(number) {
+
+    if (number <= 99){return "";}
+    return `${readableNumbers[Math.floor(number/100)]} ${readableNumbers[100]}`
+
+}
+
+function reDecade(number) {
+    
+    function isSpaceNeed(number) {
+        
+        if (number > 100){
+            return ' ';
+        } else { 
+           return ''; }
+    } 
+    
+    factor = number.toString().split('').reverse()
+    
+    if (!factor[1]){return "";}
+    
+    if (readableNumbers[factor[1] + factor[0]]){
+        return `${isSpaceNeed(number)}${readableNumbers[factor[1] + factor[0]]}`
+        
+    } else if (factor[1] == 0) {
+        return "";
+
+    } else {
+        return `${isSpaceNeed(number)}${readableNumbers[factor[1] + '0']}`
+    }
+}
+
+function reNumber(number) {
+    
+    function isSpaceNeed(number) {        
+        if (number > 9){            
+            return ' ';
+        } else {             
+            return ''; }
+    }
+    
+    factor = number.toString().split('').reverse()
+    
+    if(factor[0] == 0){return ""}
+    if((readableNumbers[factor[1] + factor[0]])){
+        
+        return ""
+    } else {
+        return `${isSpaceNeed(number)}${readableNumbers[factor[0]]}`
+    }
 }
 
 const readableNumbers = {
